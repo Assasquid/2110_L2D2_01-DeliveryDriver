@@ -940,3 +940,4 @@ Received Import Request.
   path: Assets/PolygonCity/Prefabs/Props/SM_Prop_ShopInterior_Shelf_03.prefab
   artifactKey: Guid(ccc70d3ae8c17394f981d9af684e9312) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/PolygonCity/Prefabs/Props/SM_Prop_ShopInterior_Shelf_03.prefab using Guid(ccc70d3ae8c17394f981d9af684e9312) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02ad66b0d849d7b3771dd8ead67cd15a') in 0.013298 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
