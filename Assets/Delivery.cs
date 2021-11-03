@@ -8,15 +8,19 @@ public class Delivery : MonoBehaviour
     bool hasPackage;
     [SerializeField] float destructionDelay;
     [SerializeField] ParticleSystem pickUpFX;
+    [SerializeField] AudioClip pickUpSound;
+    [SerializeField] float pickUpSoundVolume = 0.5f;
     [SerializeField] ParticleSystem deliveredFX;
+    [SerializeField] float deliveredSoundVolume = 0.5f;
+    [SerializeField] AudioClip deliveredSound;
     [SerializeField] GameObject parcelIndicator;
+    [SerializeField] TMP_Text packagesLeftText;
+    public int packagesLeft;
+    public GameObject[] totalPackages;
+    AudioSource audioSource;
     // [SerializeField] Color32 packageColor;
     // [SerializeField] Color32 noPackageColor;
     // SpriteRenderer capsuleSpriteRenderer;
-    public int packagesLeft;
-    public GameObject[] totalPackages;
-    [SerializeField] TMP_Text packagesLeftText;
-    
 
     void Start() 
     {
@@ -24,6 +28,7 @@ public class Delivery : MonoBehaviour
         // capsuleSpriteRenderer = GetComponent<SpriteRenderer>();
         packagesLeft = totalPackages.Length;
         packagesLeftText.text = packagesLeft.ToString();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter2D(Collision2D other) 
@@ -41,6 +46,8 @@ public class Delivery : MonoBehaviour
             // capsuleSpriteRenderer.color = packageColor;
             Destroy(other.gameObject, destructionDelay);
             Instantiate(pickUpFX, other.transform.position, Quaternion.identity);
+            audioSource.PlayOneShot(pickUpSound, pickUpSoundVolume);
+
         }
 
         else if (other.tag == "Customer" && hasPackage)
@@ -52,6 +59,7 @@ public class Delivery : MonoBehaviour
             Instantiate(deliveredFX, other.transform.position, Quaternion.identity);
             packagesLeft --;
             packagesLeftText.text = packagesLeft.ToString();
+            audioSource.PlayOneShot(deliveredSound, deliveredSoundVolume);
         } 
     }
 }

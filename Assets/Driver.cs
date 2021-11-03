@@ -7,27 +7,36 @@ public class Driver : MonoBehaviour
     [SerializeField] float steerSpeed;
     [SerializeField] float moveSpeed;
     [SerializeField] float buffSpeed;
+    [SerializeField] float maxSpeed;
     [SerializeField] float nerfSpeed;
+    [SerializeField] float minSpeed;
     [SerializeField] ParticleSystem buffFX;
+    [SerializeField] AudioClip buffSound;
+    [SerializeField] float buffSoundVolume;    
     [SerializeField] ParticleSystem nerfFX;
+    [SerializeField] AudioClip nerfSound;
+    [SerializeField] float nerfSoundVolume;
+    AudioSource audioSource;
     
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.tag == "Buff" && moveSpeed < 100)
+        if (other.tag == "Buff" && moveSpeed < maxSpeed)
         {
             moveSpeed += buffSpeed;
             Instantiate(buffFX, other.transform.position, Quaternion.identity);
+            audioSource.PlayOneShot(buffSound, buffSoundVolume);
         }
 
-        else if (other.tag == "Nerf" && moveSpeed > 5)
+        else if (other.tag == "Nerf" && moveSpeed > minSpeed)
         {
             moveSpeed -= nerfSpeed;
             Instantiate(nerfFX, other.transform.position, Quaternion.identity);
+            audioSource.PlayOneShot(nerfSound, nerfSoundVolume);
         }
     }
 
