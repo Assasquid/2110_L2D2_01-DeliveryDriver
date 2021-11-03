@@ -6,10 +6,29 @@ public class Driver : MonoBehaviour
 {
     [SerializeField] float steerSpeed;
     [SerializeField] float moveSpeed;
+    [SerializeField] float buffSpeed;
+    [SerializeField] float nerfSpeed;
+    [SerializeField] ParticleSystem buffFX;
+    [SerializeField] ParticleSystem nerfFX;
     
     void Start()
     {
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (other.tag == "Buff" && moveSpeed < 100)
+        {
+            moveSpeed += buffSpeed;
+            Instantiate(buffFX, other.transform.position, Quaternion.identity);
+        }
+
+        else if (other.tag == "Nerf" && moveSpeed > 5)
+        {
+            moveSpeed -= nerfSpeed;
+            Instantiate(nerfFX, other.transform.position, Quaternion.identity);
+        }
     }
 
     void Update()
